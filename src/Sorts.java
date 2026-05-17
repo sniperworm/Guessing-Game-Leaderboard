@@ -10,6 +10,7 @@ public class Sorts {
     private static final Path CHARACTER_LIST_FILE = Path.of("characters.txt");
     ArrayList<Character> list = new ArrayList<Character>();
     Scanner scan = new Scanner(System.in);
+    SupabaseLeaderboard onlineLeaderboard = new SupabaseLeaderboard();
 
 public Sorts(){
      // When the program starts, loadCharacters() tries to rebuild the ArrayList
@@ -48,19 +49,6 @@ public void askUser(){
 
                 System.out.print("Enter a name:");
                 String name = scan.nextLine();
-
-                // Check the current ArrayList to see if that name already exists.
-                // If it does, we do not create a brand-new Character with another ID.
-                boolean check = findDupes(list, name);
-                if(check){
-                    System.out.println("That is a dupe");
-                    removeDupes();
-
-                    // After changing the list, save it again so characters.txt matches
-                    // what is currently inside the ArrayList.
-                    saveCharacters();
-                }
-                else {
                     // This calls our helper method instead of asking the user for an ID.
                     // The Character class handles the ID automatically when new Character(name)
                     // runs inside createCharacter.
@@ -78,10 +66,9 @@ public void askUser(){
                     // Save the whole list after adding a new Character.
                     // This makes the list available again the next time the program runs.
                     saveCharacters();
+                    onlineLeaderboard.submitScore(temp);
                     updateTruthStatements = false;
                 }
-
-            }
             else{
                 System.out.println("Not a valid input");
             }
@@ -92,6 +79,7 @@ public void askUser(){
 }
     public void printList() {
         sortAverages();
+        onlineLeaderboard.printTopScores();
         for(int i = 0; i < list.size(); i++) {
             // i is the ArrayList index, which means the position in the list.
             // temp.getId() is the Character's permanent ID number.
