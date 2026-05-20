@@ -85,7 +85,7 @@ public class SupabaseLeaderboard {
         }
 
         String cleaned = json.replace("[", "").replace("]", "");
-        String[] rows = cleaned.split("\\},\\{");
+        String[] rows = cleaned.split("\\}\\s*,\\s*\\{");
 
         for (int i = 0; i < rows.length; i++) {
             String row = rows[i].replace("{", "").replace("}", "");
