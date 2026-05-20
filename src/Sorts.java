@@ -80,6 +80,7 @@ public void askUser(){
     public void printList() {
         sortAverages();
         onlineLeaderboard.printTopScores();
+        System.out.println("Local Saved Scores: ");
         for(int i = 0; i < list.size(); i++) {
             // i is the ArrayList index, which means the position in the list.
             // temp.getId() is the Character's permanent ID number.
